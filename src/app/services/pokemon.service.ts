@@ -1,34 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http'
+
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
   
-  _url  = "https://pokeapi.co/api/v2/pokemon?limit=5&offset=0";
+  //"https://pokeapi.co/api/v2/pokemon?limit=5&offset=0"
 
-  constructor(
-    private http: HttpClient
+  constructor( 
+    private http:HttpClient
   ) { 
-    console.log("service")
+  }
+  traePokemon(){
+    return this.http.get("https://pokeapi.co/api/v2/pokemon?limit=5&offset=0")
+
   }
 
-  getPokemon(){
-    let header = new HttpHeaders()
-    .set('Type-content','aplication/json');
-
-    return this.http.get(this._url, {
-      headers:header
-    });
-    
-  }
-
-  getSkill(_urlSkill: string){
-    let header = new HttpHeaders()
-    .set('Type-content','aplication/json');
-
-    return this.http.get(_urlSkill,{
-      headers:header
-    });
+  eliminarPokemon(){
+    return this.http.delete("https://pokeapi.co/api/v2/pokemon?limit=5&offset=0")
   }
 }

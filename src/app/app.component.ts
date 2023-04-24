@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PokemonService } from './services/pokemon.service';
 
 @Component({
@@ -6,28 +6,30 @@ import { PokemonService } from './services/pokemon.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'Pokemon';
-
-  public pokemones: Array<any> = [];
+export class AppComponent implements OnInit{
+  pokemones:Array<any>= []
 
   constructor(
-    private pokemonService: PokemonService
+    private servicio: PokemonService
   ){
-    //Obtiene los pokemones y los muestra en la tabla
-    this.pokemonService.getPokemon().subscribe((resp:any) =>{
-      this.pokemones = resp.results;
-      console.log(this.pokemones);
-    })
 
+  }
+  ngOnInit(): void {
+    this.traerPokemon();
+  }
+
+  traerPokemon(){
+    this.servicio.traePokemon().subscribe((res:any)=>{ 
+      this.pokemones=res.results
+      console.log(res.results)
+    })
     
   }
-}
 
-//Función para obtener las Skill
-function obtenerLaSkill(pokemonService: PokemonService) {
-  pokemonService.getSkill("https://pokeapi.co/api/v2/pokemon/1/").subscribe((resp:any) =>{
-      console.log(resp)
-  })
+  eliminarPokemon(){
+    this.servicio.eliminarPokemon().subscribe((res:any)=>{
+
+    })
+  }
 }
 
